@@ -2,6 +2,14 @@
 
 A lightweight and efficient time-tracking plugin for Neovim. **timelog.nvim** allows you to quickly log timestamps, track time spent on tasks, and manage your time efficiently—all without leaving your editor.
 
+## Todo before an official release
+
+- [ ] Allow passing custom function to fetch log file for the day/week
+- [ ] Make time format customizable
+- [ ] Show notifications with fidget
+- [ ] Add total time for the day
+
+
 ## 📌 Features
 
 - 🚀 **Quick Timestamp Logging** – Instantly insert timestamps into a log file or buffer.
@@ -19,6 +27,9 @@ A lightweight and efficient time-tracking plugin for Neovim. **timelog.nvim** al
 {
     "mraspaud/timelog.nvim",
     opts = {},
+    dependencies = {
+        "epwalsh/obsidian.nvim"
+    }
 }
 ```
 

@@ -3,7 +3,7 @@ local M = {}
 
 local summary = require("timelog.summary")
 local util = require("timelog.util")
-local time_format = "%-H:%M"
+local time_format = "%H:%M"
 
 M.log_end_time = nil
 

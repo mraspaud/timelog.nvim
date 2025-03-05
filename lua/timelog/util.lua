@@ -6,7 +6,6 @@ local obsidian = require("obsidian")
 M.get_today_note_buffer = function()
   local client = obsidian.get_client()
   local today_note = client:today()
-  print(vim.inspect(today_note))
   local buf = today_note.bufnr
   if not buf then
     local util = require("obsidian.util")
