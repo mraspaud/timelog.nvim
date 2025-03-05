@@ -1,15 +1,15 @@
 local M = {}
 
 
-local obsidian = require("obsidian")  -- Ensure obsidian.nvim is installed and loaded
 local summary = require("timelog.summary")
+local util = require("timelog.util")
 local time_format = "%-H:%M"
-local summarize_time = nil
+
 M.log_end_time = nil
 
 -- Function to insert a row in the time log table
 M.log_start_time = function(continue)
-  local note_buffer = summary.get_today_note_buffer()
+  local note_buffer = util.get_today_note_buffer()
 
   local lines = vim.api.nvim_buf_get_lines(note_buffer, 0, -1, false)
   local insert_idx = #lines + 1
@@ -38,10 +38,11 @@ M.log_start_time = function(continue)
   if not found_table then
     vim.api.nvim_buf_set_lines(note_buffer, insert_idx, insert_idx, false, {
       "# Time Log",
+      "",
       "| Start | End | Activity |",
       "|------:|-----|----------|"
     })
-    insert_idx = insert_idx + 3
+    insert_idx = insert_idx + 4
   end
 
   -- Get the current timestamp
@@ -71,7 +72,7 @@ end
 
 -- Function to log end time
 M.log_end_time = function()
-  local note_buffer = summary.get_today_note_buffer()
+  local note_buffer = util.get_today_note_buffer()
 
   local lines = vim.api.nvim_buf_get_lines(note_buffer, 0, -1, false)
   local last_unfinished_index = nil
@@ -89,7 +90,7 @@ M.log_end_time = function()
     vim.api.nvim_buf_set_lines(note_buffer, last_unfinished_index - 1, last_unfinished_index, false, { line })
     print("Logged end time: " .. timestamp)
     -- Auto-update the summary
-    summary.summarize_time()
+    summary.summarize_time(note_buffer)
   else
     print("No open time entry found!")
   end

@@ -1,8 +1,8 @@
 local M = {}
 
 M.setup = function(opts)
-  M.log = require("time_tracker.log")
-  M.summary = require("time_tracker.summary")
+  M.log = require("timelog.log")
+  M.summary = require("timelog.summary")
   vim.keymap.set("n", "<leader>tb", M.log.log_start_time, { desc = "Log start time in Obsidian daily" })
   vim.keymap.set("n", "<leader>te", M.log.log_end_time, { desc = "Log end time in Obsidian daily" })
   vim.keymap.set("n", "<leader>ts", M.summary.summarize_time, { desc = "Summarize time per activity in Obsidian daily" })

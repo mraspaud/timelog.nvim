@@ -1,10 +1,10 @@
 local M = {}
-local util = require("timelog.util")
 
 -- Function to calculate time spent per activity
-M.summarize_time = function()
-  local buf = util.get_today_note_buffer()
-  if not buf then return end
+M.summarize_time = function(buf)
+  if not buf then
+    buf = vim.api.nvim_get_current_buf()
+  end
 
   local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
   local activity_times = {}
