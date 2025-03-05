@@ -14,7 +14,7 @@ M.log_start_time = function(continue)
   local lines = vim.api.nvim_buf_get_lines(note_buffer, 0, -1, false)
   local insert_idx = #lines + 1
   local found_table = false
-  local activity = nil
+  local latest_activity = nil
   for i, line in ipairs(lines) do
     if line:match("| Start | End | Activity |") then
       found_table = true
@@ -28,7 +28,7 @@ M.log_start_time = function(continue)
     if found_table then
       if line:match("^|") then
         insert_idx = i  -- Keep updating index as long as we see table rows
-        _, _, activity = line:match("| (%d+:%d%d) | (%d+:%d%d) | (.+) |")
+        _, _, latest_activity = line:match("| (%d+:%d%d) | (%d+:%d%d) | (.+) |")
       else
         break  -- Stop tracking if we leave the table
       end
@@ -49,7 +49,7 @@ M.log_start_time = function(continue)
   local timestamp = os.date(time_format)
 
   -- Prompt the user for the activity name
-  if not continue or not activity then
+  if not continue or not latest_activity then
     vim.ui.input({ prompt = "Enter activity: " }, function(activity)
       if activity then
         local line = string.format("| %s |  | %s |", timestamp, activity)
@@ -59,10 +59,10 @@ M.log_start_time = function(continue)
       end
     end)
   else
-    local line = string.format("| %s |  | %s |", timestamp, activity)
+    local line = string.format("| %s |  | %s |", timestamp, latest_activity)
     vim.api.nvim_buf_set_lines(note_buffer, insert_idx, insert_idx, false, { line })
 
-    print("Logged start time for: " .. activity)
+    print("Logged start time for: " .. latest_activity)
   end
 end
 
